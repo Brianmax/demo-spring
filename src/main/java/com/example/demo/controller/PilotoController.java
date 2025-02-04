@@ -3,6 +3,8 @@ package com.example.demo.controller;
 import com.example.demo.entity.PilotoEntity;
 import com.example.demo.entity.TestEntity;
 import com.example.demo.repository.PilotoRepository;
+import com.example.demo.request.PilotoRequest;
+import com.example.demo.service.PilotoService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -12,14 +14,16 @@ import java.util.Optional;
 public class PilotoController {
     
     private PilotoRepository pilotoRepository;
+    private PilotoService pilotoService;
     
-    public PilotoController(PilotoRepository pilotoRepository) {
+    public PilotoController(PilotoRepository pilotoRepository, PilotoService pilotoService) {
         this.pilotoRepository = pilotoRepository;
+        this.pilotoService = pilotoService;
     }
     
     @PostMapping("/save")
-    public PilotoEntity pilotoSave(@RequestBody PilotoEntity piloto) {
-        return pilotoRepository.save(piloto);
+    public PilotoEntity pilotoSave(@RequestBody PilotoRequest pilotoRequest) {
+        return pilotoService.pilotoSave(pilotoRequest);
     }
     
     @GetMapping("/find/{id}")

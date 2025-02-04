@@ -14,5 +14,4 @@ public class AerolineaEntity {
     @Column(name = "id_aerolinea")
     private int id;
     private String nombre;
-
 }
