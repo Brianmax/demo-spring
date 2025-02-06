@@ -8,7 +8,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "aviones")
-public class AvionesEntity {
+public class AvionEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_avion")
@@ -18,6 +18,6 @@ public class AvionesEntity {
     private String modelo;
     
     @ManyToOne
-    @JoinTable(name = "id_aerolinea_fk")
+    @JoinColumn(name = "id_aerolinea_fk")
     private AerolineaEntity aerolineaEntity;
 }
