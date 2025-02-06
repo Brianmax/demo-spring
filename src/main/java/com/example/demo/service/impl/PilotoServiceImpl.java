@@ -39,11 +39,17 @@ public class PilotoServiceImpl implements PilotoService {
     }
 
     @Override
-    public PilotoEntity findById(int id) {
+    public ResponseBase<PilotoEntity> findById(int id) {
         Optional<PilotoEntity> pilotoEntityOptional = pilotoRepository.findById(id);
         if(pilotoEntityOptional.isEmpty()) {
-            return null;
+            return new ResponseBase<>(
+                    404,
+                    "No existe registro con el ID ingresado",
+                    Optional.empty());
         }
-        return pilotoEntityOptional.get();
+        return new ResponseBase<>(
+                200,
+                "Registro encontrado",
+                pilotoEntityOptional);
     }
 }

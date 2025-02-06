@@ -25,7 +25,8 @@ public class PilotoController {
     
     @GetMapping("/find/{id}")
     public PilotoEntity findById(@PathVariable int id) {
-        return pilotoService.findById(id);
+        return null;
+        //return pilotoService.findById(id);
     }
     // crear un service para aerolinea
 }

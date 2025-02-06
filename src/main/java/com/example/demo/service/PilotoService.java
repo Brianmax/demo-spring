@@ -7,5 +7,5 @@ import com.example.demo.response.ResponseBase;
 public interface PilotoService {
     // metodo para guardar un piloto
     ResponseBase<PilotoEntity> pilotoSave(PilotoRequest piloto);
-    PilotoEntity findById(int id);
+    ResponseBase<PilotoEntity> findById(int id);
 }
