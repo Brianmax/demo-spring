@@ -6,6 +6,7 @@ import com.example.demo.response.ResponseBase;
 import com.example.demo.service.PilotoService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -28,5 +29,8 @@ public class PilotoController {
         return null;
         //return pilotoService.findById(id);
     }
-    // crear un service para aerolinea
+    @GetMapping("/find/nombre/{nombre}")
+    public ResponseBase<List<PilotoEntity>> findByNombre(@PathVariable String nombre) {
+        return pilotoService.findByNombre(nombre);
+    }
 }

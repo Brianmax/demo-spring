@@ -2,6 +2,7 @@ package com.example.demo.Util;
 
 public class Constants {
     public static String MESSAGE_SUCCESFULL = "Recurso creado con exito";
+    public static String MESSAGE_FIND = "Recurso encontrado";
     public static String MESSAGE_ERROR = "Error al crear el recurso";
     public static String MESSAGE_SUCCESFULL_UPDATE = "Recurso actualizado con exito";
     public static String MESSAGE_ERROR_UPDATE = "Error al actualizar el recurso";

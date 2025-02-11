@@ -1,5 +1,6 @@
 package com.example.demo.service.impl;
 
+import com.example.demo.Util.Constants;
 import com.example.demo.entity.PilotoEntity;
 import com.example.demo.repository.PilotoRepository;
 import com.example.demo.request.PilotoRequest;
@@ -7,6 +8,7 @@ import com.example.demo.response.ResponseBase;
 import com.example.demo.service.PilotoService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -51,5 +53,15 @@ public class PilotoServiceImpl implements PilotoService {
                 200,
                 "Registro encontrado",
                 pilotoEntityOptional);
+    }
+
+    @Override
+    public ResponseBase<List<PilotoEntity>> findByNombre(String nombre) {
+        List<PilotoEntity> pilotoEntities = pilotoRepository.findByNombre(nombre);
+        if(pilotoEntities.isEmpty()) {
+            return new ResponseBase<>(Constants.CODE_NOT_FOUND, Constants.MESSAGE_NOT_FOUND, Optional.empty());
+        }
+        
+        return new ResponseBase<>(Constants.CODE_SUCCESFULL, Constants.MESSAGE_FIND, Optional.of(pilotoEntities));
     }
 }
