@@ -17,7 +17,7 @@ public class PasajeroServiceImpl implements PasajeroService {
     @Override
     public ResponseBase<PasajeroEntity> createPasajero(PasajeroEntity pasajeroEntity) {
         pasajeroRepository.save(pasajeroEntity);
-        return new ResponseBase<>(Constants.CODE_CREATED, Constants.MESSAGE_SUCCESFULL, Optional.of(pasajeroEntity))
+        return new ResponseBase<>(Constants.CODE_CREATED, Constants.MESSAGE_SUCCESFULL, Optional.of(pasajeroEntity));
     }
 
     @Override

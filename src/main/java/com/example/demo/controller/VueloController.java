@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.entity.VueloEntity;
 import com.example.demo.request.VueloRequest;
 import com.example.demo.response.ResponseBase;
+import com.example.demo.response.VueloResponse;
 import com.example.demo.service.AvionService;
 import com.example.demo.service.VueloService;
 import lombok.AllArgsConstructor;
@@ -22,7 +23,7 @@ public class VueloController {
     }
     
     @PostMapping("/save")
-    public ResponseBase<VueloEntity> create(@RequestBody VueloRequest vueloRequest) {
+    public ResponseBase<VueloResponse> create(@RequestBody VueloRequest vueloRequest) {
         return vueloService.create(vueloRequest);
     }
 }
