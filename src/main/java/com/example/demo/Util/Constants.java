@@ -8,6 +8,7 @@ public class Constants {
     public static String MESSAGE_ERROR_UPDATE = "Error al actualizar el recurso";
     public static String MESSAGE_SUCCESFULL_DELETE = "Recurso eliminado con exito";
     public static String MESSAGE_NOT_FOUND = "Recurso no encontrado";
+    public static String MESSAGE_BAD_REQUEST = "Solicitud incorrecta";
     
     public static int CODE_SUCCESFULL = 200;
     public static int CODE_ERROR = 500;
