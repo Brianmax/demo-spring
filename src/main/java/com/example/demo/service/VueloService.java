@@ -6,4 +6,5 @@ import com.example.demo.response.VueloResponse;
 
 public interface VueloService {
     ResponseBase<VueloResponse> create(VueloRequest vueloRequest);
+    ResponseBase<VueloResponse> findByID(int id);
 }

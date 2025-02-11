@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.List;
 
 
 @Getter
@@ -29,4 +30,10 @@ public class VueloEntity {
     @ManyToOne
     @JoinColumn(name = "id_avion_fk")
     private AvionEntity avionEntity;
+    
+    @ManyToMany
+    @JoinTable(name = "vuelo_piloto",
+    joinColumns = @JoinColumn(name = "id_vuelo_fk"),
+    inverseJoinColumns = @JoinColumn(name = "id_piloto_fk"))
+    private List<PilotoEntity> pilotoEntities;
 }
