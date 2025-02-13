@@ -99,9 +99,15 @@ public class VueloServiceImpl implements VueloService {
                     vueloEntity.getAvionEntity().getAerolineaEntity().getNombre(),
                     pilotoResponseList
             );
-            return new ResponseBase<>(Constants.CODE_SUCCESFULL, Constants.MESSAGE_SUCCESFULL, Optional.of(vueloResponse));
+            return new ResponseBase<>(Constants.CODE_SUCCESFULL, Constants.MESSAGE_FIND, Optional.of(vueloResponse));
     }
-    
+
+    @Override
+    public ResponseBase<List<VueloResponse>> findByFechaOrigen(String fecha) {
+        List<VueloEntity> vueloEntities = vueloRepository.findByFechaSalidaAfter(fecha);
+        return null;
+    }
+
     private String toStringPiloto(PilotoEntity pilotoEntity) {
         return pilotoEntity.getNombre().charAt(0) + ". " + pilotoEntity.getNombre();
     }

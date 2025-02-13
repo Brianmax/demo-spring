@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 
+import com.example.demo.response.VueloResponse;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -36,4 +37,20 @@ public class VueloEntity {
     joinColumns = @JoinColumn(name = "id_vuelo_fk"),
     inverseJoinColumns = @JoinColumn(name = "id_piloto_fk"))
     private List<PilotoEntity> pilotoEntities;
+    
+    public static VueloResponse toVueloResponse(VueloEntity vueloEntity) {
+        List
+        for(PilotoEntity pilotoEntity: vueloEntity.getPilotoEntities()) {
+            
+        }
+        return new VueloResponse(
+                vueloEntity.getFechaSalida(),
+                vueloEntity.getFechaLlegada(),
+                vueloEntity.getOrigen(),
+                vueloEntity.getDestino(),
+                vueloEntity.getAvionEntity().getModelo(),
+                vueloEntity.getAvionEntity().getAerolineaEntity().getNombre(),
+                
+        )
+    }
 }
