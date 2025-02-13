@@ -25,19 +25,20 @@ public class VueloServiceImpl implements VueloService {
     private VueloRepository vueloRepository;
     private AvionRepository avionRepository;
     private PilotoRepository pilotoRepository;
+
     @Override
     public ResponseBase<VueloResponse> create(VueloRequest vueloRequest) {
         Optional<AvionEntity> avionOptional = avionRepository.findById(vueloRequest.getIdAvion());
-        if(avionOptional.isEmpty()) {
-            return new ResponseBase<>(Constants.CODE_NOT_FOUND,Constants.MESSAGE_NOT_FOUND, Optional.empty());
+        if (avionOptional.isEmpty()) {
+            return new ResponseBase<>(Constants.CODE_NOT_FOUND, Constants.MESSAGE_NOT_FOUND, Optional.empty());
         }
 
         List<PilotoEntity> pilotoEntityList = new ArrayList<>();
         List<PilotoResponse> pilotoResponseList = new ArrayList<>();
 
-        for(int id: vueloRequest.getPilotos()) {
+        for (int id : vueloRequest.getPilotos()) {
             PilotoEntity pilotoEntity = pilotoRepository.findById(id).orElse(null);
-            if(pilotoEntity == null) {
+            if (pilotoEntity == null) {
                 return new ResponseBase<>(
                         Constants.CODE_NOT_FOUND,
                         Constants.MESSAGE_NOT_FOUND,
@@ -57,9 +58,8 @@ public class VueloServiceImpl implements VueloService {
         vueloEntity.setAvionEntity(avionOptional.get());
         vueloEntity.setPilotoEntities(pilotoEntityList);
         vueloRepository.save(vueloEntity);
-        
-        
-        
+
+
         VueloResponse vueloResponse = new VueloResponse(
                 vueloEntity.getFechaSalida(),
                 vueloEntity.getFechaLlegada(),
@@ -69,7 +69,7 @@ public class VueloServiceImpl implements VueloService {
                 vueloEntity.getAvionEntity().getAerolineaEntity().getNombre(),
                 pilotoResponseList
         );
-        
+
         return new ResponseBase<>(Constants.CODE_CREATED,
                 Constants.MESSAGE_SUCCESFULL,
                 Optional.of(vueloResponse));
@@ -78,13 +78,31 @@ public class VueloServiceImpl implements VueloService {
     @Override
     public ResponseBase<VueloResponse> findByID(int id) {
         Optional<VueloEntity> vueloEntityOptional = vueloRepository.findById(id);
-        if(vueloEntityOptional.isEmpty()) {
+        if (vueloEntityOptional.isEmpty()) {
             return new ResponseBase<>(
                     Constants.CODE_NOT_FOUND,
                     Constants.MESSAGE_NOT_FOUND,
                     Optional.empty());
         }
-        VueloEntity vueloEntity = vueloEntityOptional.get();
-        return null;
+            List<PilotoResponse> pilotoResponseList = new ArrayList<>();
+            VueloEntity vueloEntity = vueloEntityOptional.get();
+            for (PilotoEntity piloto : vueloEntity.getPilotoEntities()) {
+                String pilotoSring = toStringPiloto(piloto);
+                pilotoResponseList.add(new PilotoResponse(pilotoSring));
+            }
+            VueloResponse vueloResponse = new VueloResponse(
+                    vueloEntity.getFechaSalida(),
+                    vueloEntity.getFechaLlegada(),
+                    vueloEntity.getOrigen(),
+                    vueloEntity.getDestino(),
+                    vueloEntity.getAvionEntity().getModelo(),
+                    vueloEntity.getAvionEntity().getAerolineaEntity().getNombre(),
+                    pilotoResponseList
+            );
+            return new ResponseBase<>(Constants.CODE_SUCCESFULL, Constants.MESSAGE_SUCCESFULL, Optional.of(vueloResponse));
+    }
+    
+    private String toStringPiloto(PilotoEntity pilotoEntity) {
+        return pilotoEntity.getNombre().charAt(0) + ". " + pilotoEntity.getNombre();
     }
 }
