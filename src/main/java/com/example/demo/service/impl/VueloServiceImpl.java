@@ -1,6 +1,7 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.Util.Constants;
+import com.example.demo.conversion.Conversions;
 import com.example.demo.entity.AvionEntity;
 import com.example.demo.entity.PilotoEntity;
 import com.example.demo.entity.VueloEntity;
@@ -84,31 +85,25 @@ public class VueloServiceImpl implements VueloService {
                     Constants.MESSAGE_NOT_FOUND,
                     Optional.empty());
         }
-            List<PilotoResponse> pilotoResponseList = new ArrayList<>();
             VueloEntity vueloEntity = vueloEntityOptional.get();
-            for (PilotoEntity piloto : vueloEntity.getPilotoEntities()) {
-                String pilotoSring = toStringPiloto(piloto);
-                pilotoResponseList.add(new PilotoResponse(pilotoSring));
-            }
-            VueloResponse vueloResponse = new VueloResponse(
-                    vueloEntity.getFechaSalida(),
-                    vueloEntity.getFechaLlegada(),
-                    vueloEntity.getOrigen(),
-                    vueloEntity.getDestino(),
-                    vueloEntity.getAvionEntity().getModelo(),
-                    vueloEntity.getAvionEntity().getAerolineaEntity().getNombre(),
-                    pilotoResponseList
-            );
+            VueloResponse vueloResponse = Conversions.entityToVueloResponse(vueloEntity);
             return new ResponseBase<>(Constants.CODE_SUCCESFULL, Constants.MESSAGE_FIND, Optional.of(vueloResponse));
     }
 
     @Override
     public ResponseBase<List<VueloResponse>> findByFechaOrigen(String fecha) {
         List<VueloEntity> vueloEntities = vueloRepository.findByFechaSalidaAfter(fecha);
-        return null;
+        List<VueloResponse> vueloResponses = new ArrayList<>();
+        
+        for(VueloEntity vuelo: vueloEntities) {
+            VueloResponse vueloResponse = Conversions.entityToVueloResponse(vuelo);
+            vueloResponses.add(vueloResponse);
+        }
+        return new ResponseBase<>(
+                Constants.CODE_SUCCESFULL,
+                Constants.MESSAGE_FIND,
+                Optional.of(vueloResponses));
     }
 
-    private String toStringPiloto(PilotoEntity pilotoEntity) {
-        return pilotoEntity.getNombre().charAt(0) + ". " + pilotoEntity.getNombre();
-    }
+    
 }

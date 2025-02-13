@@ -38,19 +38,4 @@ public class VueloEntity {
     inverseJoinColumns = @JoinColumn(name = "id_piloto_fk"))
     private List<PilotoEntity> pilotoEntities;
     
-    public static VueloResponse toVueloResponse(VueloEntity vueloEntity) {
-        List
-        for(PilotoEntity pilotoEntity: vueloEntity.getPilotoEntities()) {
-            
-        }
-        return new VueloResponse(
-                vueloEntity.getFechaSalida(),
-                vueloEntity.getFechaLlegada(),
-                vueloEntity.getOrigen(),
-                vueloEntity.getDestino(),
-                vueloEntity.getAvionEntity().getModelo(),
-                vueloEntity.getAvionEntity().getAerolineaEntity().getNombre(),
-                
-        )
-    }
 }
