@@ -29,48 +29,17 @@ public class VueloServiceImpl implements VueloService {
 
     @Override
     public ResponseBase<VueloResponse> create(VueloRequest vueloRequest) {
-        Optional<AvionEntity> avionOptional = avionRepository.findById(vueloRequest.getIdAvion());
-        if (avionOptional.isEmpty()) {
+        Optional<VueloEntity> vueloEntityOptional = getVueloEntity(vueloRequest);
+        
+        if(vueloEntityOptional.isEmpty()) {
             return new ResponseBase<>(Constants.CODE_NOT_FOUND, Constants.MESSAGE_NOT_FOUND, Optional.empty());
         }
-
-        List<PilotoEntity> pilotoEntityList = new ArrayList<>();
-        List<PilotoResponse> pilotoResponseList = new ArrayList<>();
-
-        for (int id : vueloRequest.getPilotos()) {
-            PilotoEntity pilotoEntity = pilotoRepository.findById(id).orElse(null);
-            if (pilotoEntity == null) {
-                return new ResponseBase<>(
-                        Constants.CODE_NOT_FOUND,
-                        Constants.MESSAGE_NOT_FOUND,
-                        Optional.empty());
-            }
-            pilotoEntityList.add(pilotoEntity);
-            String nombre = pilotoEntity.getNombre();
-            String apellido = pilotoEntity.getApellido();
-            String pilotoConcat = nombre.charAt(0) + ". " + apellido;
-            pilotoResponseList.add(new PilotoResponse(pilotoConcat));
-        }
-        VueloEntity vueloEntity = new VueloEntity();
-        vueloEntity.setFechaSalida(vueloRequest.getFechaSalida());
-        vueloEntity.setFechaLlegada(vueloRequest.getFechaLlegada());
-        vueloEntity.setOrigen(vueloRequest.getOrigen());
-        vueloEntity.setDestino(vueloRequest.getDestino());
-        vueloEntity.setAvionEntity(avionOptional.get());
-        vueloEntity.setPilotoEntities(pilotoEntityList);
+        
+        VueloEntity vueloEntity = vueloEntityOptional.get();
+        
         vueloRepository.save(vueloEntity);
-
-
-        VueloResponse vueloResponse = new VueloResponse(
-                vueloEntity.getFechaSalida(),
-                vueloEntity.getFechaLlegada(),
-                vueloEntity.getOrigen(),
-                vueloEntity.getDestino(),
-                vueloEntity.getAvionEntity().getModelo(),
-                vueloEntity.getAvionEntity().getAerolineaEntity().getNombre(),
-                pilotoResponseList
-        );
-
+        
+        VueloResponse vueloResponse = Conversions.entityToVueloResponse(vueloEntity);
         return new ResponseBase<>(Constants.CODE_CREATED,
                 Constants.MESSAGE_SUCCESFULL,
                 Optional.of(vueloResponse));
@@ -105,5 +74,28 @@ public class VueloServiceImpl implements VueloService {
                 Optional.of(vueloResponses));
     }
 
-    
+    private Optional<VueloEntity> getVueloEntity(VueloRequest vueloRequest) {
+        Optional<AvionEntity> avionOptional = avionRepository.findById(vueloRequest.getIdAvion());
+        if(avionOptional.isEmpty()) {
+            return Optional.empty();
+        }
+        
+        List<PilotoEntity> pilotoEntities = new ArrayList<>();
+        for (int id : vueloRequest.getPilotos()) {
+            PilotoEntity pilotoEntity = pilotoRepository.findById(id).orElse(null);
+            if (pilotoEntity == null) {
+                return Optional.empty();
+            }
+            pilotoEntities.add(pilotoEntity);
+        }
+        
+        VueloEntity vueloEntity = new VueloEntity();
+        vueloEntity.setFechaSalida(vueloRequest.getFechaSalida());
+        vueloEntity.setFechaLlegada(vueloRequest.getFechaLlegada());
+        vueloEntity.setOrigen(vueloRequest.getOrigen());
+        vueloEntity.setDestino(vueloRequest.getDestino());
+        vueloEntity.setAvionEntity(avionOptional.get());
+        vueloEntity.setPilotoEntities(pilotoEntities);
+        return Optional.of(vueloEntity);
+    }
 }
