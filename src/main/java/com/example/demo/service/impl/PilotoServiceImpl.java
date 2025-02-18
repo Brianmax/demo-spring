@@ -1,6 +1,7 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.Util.Constants;
+import com.example.demo.conversion.Conversions;
 import com.example.demo.entity.PilotoEntity;
 import com.example.demo.repository.PilotoRepository;
 import com.example.demo.request.PilotoRequest;
@@ -63,5 +64,24 @@ public class PilotoServiceImpl implements PilotoService {
         }
         
         return new ResponseBase<>(Constants.CODE_SUCCESFULL, Constants.MESSAGE_FIND, Optional.of(pilotoEntities));
+    }
+
+    @Override
+    public ResponseBase<PilotoRequest> updatePiloto(PilotoRequest piloto, int id) {
+        Optional<PilotoEntity> pilotoEntityOptional = pilotoRepository.findById(id);
+        if(pilotoEntityOptional.isEmpty()) {
+            return new ResponseBase<>(Constants.CODE_NOT_FOUND, Constants.MESSAGE_NOT_FOUND, Optional.empty());
+        }
+        PilotoEntity pilotoEntity = pilotoEntityOptional.get();
+        pilotoEntity.setNombre(piloto.getNombre());
+        pilotoEntity.setApellido(piloto.getApellido());
+
+        pilotoRepository.save(pilotoEntity);
+
+
+        return new ResponseBase<PilotoRequest>(
+                Constants.CODE_UPDATED,
+                Constants.MESSAGE_SUCCESFULL_UPDATE,
+                Optional.of(Conversions.fromPilotoEntity(pilotoEntity)));
     }
 }

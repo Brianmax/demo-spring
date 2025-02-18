@@ -11,4 +11,5 @@ public interface PilotoService {
     ResponseBase<PilotoEntity> pilotoSave(PilotoRequest piloto);
     ResponseBase<PilotoEntity> findById(int id);
     ResponseBase<List<PilotoEntity>> findByNombre(String nombre);
+    ResponseBase<PilotoRequest> updatePiloto(PilotoRequest piloto, int id);
 }

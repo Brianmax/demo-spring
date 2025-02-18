@@ -2,6 +2,7 @@ package com.example.demo.conversion;
 
 import com.example.demo.entity.PilotoEntity;
 import com.example.demo.entity.VueloEntity;
+import com.example.demo.request.PilotoRequest;
 import com.example.demo.request.VueloRequest;
 import com.example.demo.response.PilotoResponse;
 import com.example.demo.response.VueloResponse;
@@ -31,5 +32,9 @@ public class Conversions {
             list.add(new PilotoResponse(toStringPiloto(piloto)));
         }
         return list;
+    }
+
+    public static PilotoRequest fromPilotoEntity(PilotoEntity pilotoEntity) {
+        return new PilotoRequest(pilotoEntity.getNombre(), pilotoEntity.getApellido());
     }
 }

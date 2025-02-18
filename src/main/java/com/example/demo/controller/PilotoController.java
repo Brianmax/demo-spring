@@ -33,4 +33,9 @@ public class PilotoController {
     public ResponseBase<List<PilotoEntity>> findByNombre(@PathVariable String nombre) {
         return pilotoService.findByNombre(nombre);
     }
+
+    @PutMapping("/update/{id}")
+    public ResponseBase<PilotoRequest> updatePiloto(@PathVariable int id, @RequestBody PilotoRequest pilotoRequest) {
+        return pilotoService.updatePiloto(pilotoRequest, id);
+    }
 }
