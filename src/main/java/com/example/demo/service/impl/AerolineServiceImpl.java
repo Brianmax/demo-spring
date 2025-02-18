@@ -35,6 +35,16 @@ public class AerolineServiceImpl implements AerolineaService {
 
     @Override
     public ResponseBase<AerolineaEntity> updateById(AerolineaEntity aerolineaEntity, int id) {
-        return null;
+        AerolineaEntity aerolineaEntityUpdate = aerolineaRepository.findById(id).orElse(null);
+        if (aerolineaEntityUpdate == null) {
+            return new ResponseBase<>(Constants.CODE_NOT_FOUND, Constants.MESSAGE_NOT_FOUND, Optional.empty());
+        }
+
+        // actualizando los datos
+        aerolineaEntityUpdate.setNombre(aerolineaEntity.getNombre());
+        aerolineaRepository.save(aerolineaEntityUpdate);
+
+        return new ResponseBase<>(Constants.CODE_UPDATED, Constants.MESSAGE_SUCCESFULL_UPDATE, Optional.of(aerolineaEntityUpdate));
+
     }
 }

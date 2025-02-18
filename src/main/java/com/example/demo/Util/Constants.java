@@ -17,4 +17,5 @@ public class Constants {
     public static int CODE_UNAUTHORIZED = 401;
     public static int CODE_FORBIDDEN = 403;
     public static int CODE_CREATED = 201;
+    public static int CODE_UPDATED = 202;
 }

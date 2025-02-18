@@ -28,4 +28,9 @@ public class AerolineaController {
         return aerolineaService.findByNombre(nombre);
     }
 
+    @PutMapping("/update/{id}")
+    public ResponseBase<AerolineaEntity> updateAerolinea(@RequestBody AerolineaEntity aerolineaEntity, @PathVariable int id) {
+        return aerolineaService.updateById(aerolineaEntity, id);
+    }
+
 }
