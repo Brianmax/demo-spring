@@ -74,6 +74,41 @@ public class VueloServiceImpl implements VueloService {
                 Optional.of(vueloResponses));
     }
 
+    @Override
+    public ResponseBase<VueloResponse> updateById(List<Integer> ids, int idVuelo) {
+        VueloEntity vueloEntity = vueloRepository.findById(idVuelo).orElse(null);
+
+        if(vueloEntity == null) {
+            return new ResponseBase<>(
+                    Constants.CODE_NOT_FOUND,
+                    Constants.MESSAGE_NOT_FOUND,
+                    Optional.empty());
+        }
+        List<PilotoEntity> pilotoEntities = new ArrayList<>();
+
+        for(Integer id: ids) {
+            PilotoEntity pilotoEntity = pilotoRepository.findById(id).orElse(null);
+            if(pilotoEntity == null) {
+                return new ResponseBase<>(
+                        Constants.CODE_NOT_FOUND,
+                        Constants.MESSAGE_NOT_FOUND,
+                        Optional.empty()
+                );
+            }
+            pilotoEntities.add(pilotoEntity);
+        }
+
+        vueloEntity.setPilotoEntities(pilotoEntities);
+        vueloRepository.save(vueloEntity);
+
+        VueloResponse vueloResponse = Conversions.entityToVueloResponse(vueloEntity);
+
+        return new ResponseBase<>(
+                Constants.CODE_UPDATED,
+                Constants.MESSAGE_SUCCESFULL_UPDATE,
+                Optional.of(vueloResponse));
+    }
+
     private Optional<VueloEntity> getVueloEntity(VueloRequest vueloRequest) {
         Optional<AvionEntity> avionOptional = avionRepository.findById(vueloRequest.getIdAvion());
         if(avionOptional.isEmpty()) {

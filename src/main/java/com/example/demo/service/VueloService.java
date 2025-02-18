@@ -10,4 +10,5 @@ public interface VueloService {
     ResponseBase<VueloResponse> create(VueloRequest vueloRequest);
     ResponseBase<VueloResponse> findByID(int id);
     ResponseBase<List<VueloResponse>> findByFechaOrigen(String fecha);
+    ResponseBase<VueloResponse> updateById(List<Integer> ids, int idVuelo);
 }

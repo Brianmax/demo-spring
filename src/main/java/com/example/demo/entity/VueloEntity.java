@@ -37,5 +37,11 @@ public class VueloEntity {
     joinColumns = @JoinColumn(name = "id_vuelo_fk"),
     inverseJoinColumns = @JoinColumn(name = "id_piloto_fk"))
     private List<PilotoEntity> pilotoEntities;
+
+    // crear un endpoint donde pueda actualizar
+    // los pilotos de un vuelo
+
+    // [1, 4, 6, 9]
+    // [10,2, 7, 11]
     
 }

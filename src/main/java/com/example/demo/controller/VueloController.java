@@ -37,4 +37,10 @@ public class VueloController {
     public ResponseBase<List<VueloResponse>> findByFechaOrigen(@RequestParam String fechaOrigen) {
         return vueloService.findByFechaOrigen(fechaOrigen);
     }
+
+    @PutMapping("/update/{id}")
+    public ResponseBase<VueloResponse> update(@RequestBody List<Integer> ids, @PathVariable int idVuelo) {
+        return vueloService.updateById(ids, idVuelo);
+    }
+
 }
