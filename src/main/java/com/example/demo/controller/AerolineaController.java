@@ -3,10 +3,8 @@ package com.example.demo.controller;
 import com.example.demo.entity.AerolineaEntity;
 import com.example.demo.repository.AerolineaRepository;
 import com.example.demo.response.ResponseBase;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.example.demo.service.AerolineaService;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
@@ -14,15 +12,20 @@ import java.util.Optional;
 @RequestMapping("/api/v1/aerolinea")
 public class AerolineaController {
 
-    private AerolineaRepository aerolineaRepository;
+    private AerolineaService aerolineaService;
 
-    public AerolineaController(AerolineaRepository aerolineaRepository) {
-        this.aerolineaRepository = aerolineaRepository;
+    public AerolineaController(AerolineaService aerolineaService) {
+        this.aerolineaService = aerolineaService;
     }
 
     @PostMapping("/save")
-    public AerolineaEntity saveAerolinea(@RequestBody AerolineaEntity aerolineaEntity) {
-        AerolineaEntity aerolineaEntitySave = aerolineaRepository.save(aerolineaEntity);
-        return aerolineaEntitySave;
+    public ResponseBase<AerolineaEntity> saveAerolinea(@RequestBody AerolineaEntity aerolineaEntity) {
+        return aerolineaService.save(aerolineaEntity);
     }
+
+    @GetMapping("/find")
+    public ResponseBase<AerolineaEntity> findByNombre(@RequestParam String nombre) {
+        return aerolineaService.findByNombre(nombre);
+    }
+
 }
