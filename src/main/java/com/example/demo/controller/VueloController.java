@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.VueloEntity;
 import com.example.demo.request.VueloRequest;
+import com.example.demo.request.VueloUpdateRequest;
 import com.example.demo.response.ResponseBase;
 import com.example.demo.response.VueloResponse;
 import com.example.demo.service.AvionService;
@@ -39,8 +40,8 @@ public class VueloController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseBase<VueloResponse> update(@RequestBody List<Integer> ids, @PathVariable int idVuelo) {
-        return vueloService.updateById(ids, idVuelo);
+    public ResponseBase<VueloResponse> update(@RequestBody List<Integer> ids, @PathVariable int id) {
+        return vueloService.updateById(ids, id);
     }
 
 }
