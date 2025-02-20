@@ -1,6 +1,7 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.Util.Constants;
+import com.example.demo.Util.Utils;
 import com.example.demo.conversion.Conversions;
 import com.example.demo.entity.AvionEntity;
 import com.example.demo.entity.PilotoEntity;
@@ -63,6 +64,10 @@ public class VueloServiceImpl implements VueloService {
 
     @Override
     public ResponseBase<List<VueloResponse>> findByFechaOrigen(String fecha) {
+        String responseRedis = redisService.getValueByKey(fecha);
+        if(!responseRedis.isEmpty()) {
+            return Utils.convertFromJson(responseRedis);
+        }
         List<VueloEntity> vueloEntities = vueloRepository.findByFechaSalidaAfter(fecha);
         List<VueloResponse> vueloResponses = new ArrayList<>();
         
@@ -70,11 +75,15 @@ public class VueloServiceImpl implements VueloService {
             VueloResponse vueloResponse = Conversions.entityToVueloResponse(vuelo);
             vueloResponses.add(vueloResponse);
         }
-        ResponseBase<List> responseBase =  new ResponseBase<>(
+        ResponseBase<List<VueloResponse>> responseBase =  new ResponseBase<>(
                 Constants.CODE_SUCCESFULL,
                 Constants.MESSAGE_FIND,
                 Optional.of(vueloResponses));
 
+
+        String responseBaseJson = Utils.convertToJson(responseBase);
+        redisService.saveKeyValue(fecha, responseBaseJson, 5);
+        return responseBase;
     }
 
     @Override

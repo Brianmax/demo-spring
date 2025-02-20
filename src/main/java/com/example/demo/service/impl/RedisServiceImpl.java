@@ -24,7 +24,7 @@ public class RedisServiceImpl implements RedisService {
 
     @Override
     public String getValueByKey(String key) {
-        return "";
+        return stringRedisTemplate.opsForValue().get(key);
     }
 
     @Override
