@@ -20,4 +20,7 @@ public class AvionEntity {
     @ManyToOne
     @JoinColumn(name = "id_aerolinea_fk")
     private AerolineaEntity aerolineaEntity;
+
+    // crear un endpoint para poder
+    // cambiar de aerolinea al avion
 }

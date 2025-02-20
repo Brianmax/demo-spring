@@ -6,4 +6,5 @@ import com.example.demo.response.ResponseBase;
 public interface AvionService {
     ResponseBase<AvionEntity> create(AvionEntity avionEntity);
     ResponseBase<AvionEntity> findById(int id);
+    ResponseBase<AvionEntity> updateAerolinea(int idAvion, int idNuevaAerolinea);
 }
