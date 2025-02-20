@@ -12,6 +12,7 @@ import com.example.demo.request.VueloRequest;
 import com.example.demo.response.PilotoResponse;
 import com.example.demo.response.ResponseBase;
 import com.example.demo.response.VueloResponse;
+import com.example.demo.service.RedisService;
 import com.example.demo.service.VueloService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,7 @@ public class VueloServiceImpl implements VueloService {
     private VueloRepository vueloRepository;
     private AvionRepository avionRepository;
     private PilotoRepository pilotoRepository;
+    private RedisService redisService;
 
     @Override
     public ResponseBase<VueloResponse> create(VueloRequest vueloRequest) {
@@ -68,10 +70,11 @@ public class VueloServiceImpl implements VueloService {
             VueloResponse vueloResponse = Conversions.entityToVueloResponse(vuelo);
             vueloResponses.add(vueloResponse);
         }
-        return new ResponseBase<>(
+        ResponseBase<List> responseBase =  new ResponseBase<>(
                 Constants.CODE_SUCCESFULL,
                 Constants.MESSAGE_FIND,
                 Optional.of(vueloResponses));
+
     }
 
     @Override

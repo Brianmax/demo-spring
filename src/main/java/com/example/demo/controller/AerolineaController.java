@@ -1,12 +1,10 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.AerolineaEntity;
-import com.example.demo.repository.AerolineaRepository;
 import com.example.demo.response.ResponseBase;
 import com.example.demo.service.AerolineaService;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/aerolinea")
@@ -31,6 +29,11 @@ public class AerolineaController {
     @PutMapping("/update/{id}")
     public ResponseBase<AerolineaEntity> updateAerolinea(@RequestBody AerolineaEntity aerolineaEntity, @PathVariable int id) {
         return aerolineaService.updateById(aerolineaEntity, id);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public boolean deleteAerolinea(@PathVariable int id) {
+        return aerolineaService.deleteById(id);
     }
 
 }

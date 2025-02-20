@@ -47,4 +47,13 @@ public class AerolineServiceImpl implements AerolineaService {
         return new ResponseBase<>(Constants.CODE_UPDATED, Constants.MESSAGE_SUCCESFULL_UPDATE, Optional.of(aerolineaEntityUpdate));
 
     }
+
+    @Override
+    public boolean deleteById(int id) {
+        if(aerolineaRepository.existsById(id)) {
+            aerolineaRepository.deleteById(id);
+            return true;
+        }
+        return false;
+    }
 }

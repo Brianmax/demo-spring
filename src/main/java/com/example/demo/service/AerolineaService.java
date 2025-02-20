@@ -9,4 +9,5 @@ public interface AerolineaService {
     ResponseBase<AerolineaEntity> save(AerolineaEntity aerolineaEntity);
     ResponseBase<AerolineaEntity> findByNombre(String nombre);
     ResponseBase<AerolineaEntity> updateById(AerolineaEntity aerolineaEntity, int id);
+    boolean deleteById(int id);
 }
