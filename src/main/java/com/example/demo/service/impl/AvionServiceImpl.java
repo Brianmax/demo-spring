@@ -47,6 +47,21 @@ public class AvionServiceImpl implements AvionService {
     @Override
     public ResponseBase<AvionEntity> updateAerolinea(int idAvion, int idNuevaAerolinea) {
         Optional<AvionEntity> avionEntityOptional = avionRepository.findById(idAvion);
+        Optional<AerolineaEntity> aerolineaEntityOptional = aerolineaRepository.findById(idNuevaAerolinea);
 
+        if(avionEntityOptional.isEmpty() || aerolineaEntityOptional.isEmpty()) {
+            return new ResponseBase<>(Constants.CODE_NOT_FOUND, Constants.MESSAGE_NOT_FOUND, Optional.empty());
+        }
+
+        AvionEntity avionEntity = avionEntityOptional.get();
+
+        avionEntity.setAerolineaEntity(aerolineaEntityOptional.get());
+
+        avionRepository.save(avionEntity);
+
+        return new ResponseBase<>(
+                Constants.CODE_UPDATED,
+                Constants.MESSAGE_SUCCESFULL_UPDATE,
+                Optional.of(avionEntity));
     }
 }

@@ -24,4 +24,9 @@ public class AvionController {
         return avionService.findById(id);
     }
 
+    @PutMapping("/update/")
+    public ResponseBase<AvionEntity> updateAerolinea(@RequestParam int idAvion, @RequestParam int idAerolinea) {
+        return avionService.updateAerolinea(idAvion, idAerolinea);
+    }
+
 }
