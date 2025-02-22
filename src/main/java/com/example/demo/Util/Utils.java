@@ -1,5 +1,6 @@
 package com.example.demo.Util;
 
+import com.example.demo.response.BoletoResponse;
 import com.example.demo.response.ResponseBase;
 import com.example.demo.response.VueloResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -34,6 +35,29 @@ public class Utils {
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return null;
+        }
+    }
+
+    public static ResponseBase<BoletoResponse> convertFromJsonBoleto(String jsonBoleto) {
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            objectMapper.registerModule(new Jdk8Module());
+            return objectMapper.readValue(jsonBoleto, ResponseBase.class);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+    public static String fromBoletoResponseJson(ResponseBase<BoletoResponse> responseBase) {
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            objectMapper.registerModule(new Jdk8Module());
+            return objectMapper.writeValueAsString(responseBase);
+        } catch (Exception e) {
+            // manejar la excepcion
+            System.out.println(e.getMessage());
+            return "";
         }
     }
     
