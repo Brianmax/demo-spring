@@ -18,4 +18,5 @@ public class ResponseBase <T>{
         this.mensaje = mensaje;
         this.data = data;
     }
+    public ResponseBase() { }
 }

@@ -8,8 +8,4 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 @Configuration
 public class RedisTemplateConfig {
     
-    @Bean
-    public StringRedisTemplate redisTemplate() {
-        return new StringRedisTemplate();
-    }
 }

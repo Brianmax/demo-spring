@@ -65,7 +65,7 @@ public class VueloServiceImpl implements VueloService {
     @Override
     public ResponseBase<List<VueloResponse>> findByFechaOrigen(String fecha) {
         String responseRedis = redisService.getValueByKey(fecha);
-        if(!responseRedis.isEmpty()) {
+        if(responseRedis != null && !responseRedis.isEmpty()) {
             return Utils.convertFromJson(responseRedis);
         }
         List<VueloEntity> vueloEntities = vueloRepository.findByFechaSalidaAfter(fecha);

@@ -62,6 +62,13 @@
 			<artifactId>spring-data-redis</artifactId>
 			<version>3.4.1</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/redis.clients/jedis -->
+		<dependency>
+			<groupId>redis.clients</groupId>
+			<artifactId>jedis</artifactId>
+			<version>5.2.0</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
