@@ -15,4 +15,6 @@ public class PasajeroEntity {
     private int id;
     private String nombre;
     private String apellido;
+    // modificar el codigo para que se cree un
+    // pasajero solo usando el dni
 }

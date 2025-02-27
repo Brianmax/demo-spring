@@ -31,8 +31,8 @@ public class AvionServiceImpl implements AvionService {
             return new ResponseBase<>(400, "Datos incorrectos", Optional.empty());
         }
         
-        avionRepository.save(avionEntity);
-        return new ResponseBase<>(200, "Avion guardado con exito", Optional.of(avionEntity));
+        AvionEntity avionSaved = avionRepository.save(avionEntity);
+        return new ResponseBase<>(200, "Avion guardado con exito", Optional.of(avionSaved));
     }
 
     @Override
