@@ -20,8 +20,8 @@ public class PilotoController {
     }
     
     @PostMapping("/save")
-    public ResponseBase<PilotoEntity> pilotoSave(@RequestBody PilotoRequest pilotoRequest) {
-        return pilotoService.pilotoSave(pilotoRequest);
+    public ResponseBase<PilotoEntity> pilotoSave(@RequestParam String numero) {
+        return pilotoService.pilotoSave(numero);
     }
     
     @GetMapping("/find/{id}")

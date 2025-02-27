@@ -3,10 +3,13 @@ package com.example.demo.service.impl;
 import com.example.demo.Util.Constants;
 import com.example.demo.conversion.Conversions;
 import com.example.demo.entity.PilotoEntity;
+import com.example.demo.feignClient.ReniecClient;
 import com.example.demo.repository.PilotoRepository;
 import com.example.demo.request.PilotoRequest;
 import com.example.demo.response.ResponseBase;
+import com.example.demo.response.ResponseReniec;
 import com.example.demo.service.PilotoService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,24 +17,30 @@ import java.util.Optional;
 
 @Service
 public class PilotoServiceImpl implements PilotoService {
-    private PilotoRepository pilotoRepository;
+    private final PilotoRepository pilotoRepository;
+    private final ReniecClient reniecClient;
+    @Value("${token.api.reniec}")
+    private String token;
     
-    public PilotoServiceImpl(PilotoRepository pilotoRepository) {
+    public PilotoServiceImpl(PilotoRepository pilotoRepository, ReniecClient reniecClient) {
         this.pilotoRepository = pilotoRepository;
+        this.reniecClient = reniecClient;
     }
     
     @Override
-    public ResponseBase<PilotoEntity> pilotoSave(PilotoRequest piloto) {
+    public ResponseBase<PilotoEntity> pilotoSave(String dni) {
         // validar la longitud del nombre
-        if(piloto.getNombre().length() > 20) {
+        ResponseReniec responseReniec = reniecClient.getInfoReniec(dni, token);
+        if(responseReniec == null) {
             return new ResponseBase<>(
-                    400,
-                    "El nombre excede la cantidad de caracteres",
+                    Constants.CODE_NOT_FOUND,
+                    Constants.MESSAGE_NOT_FOUND,
                     Optional.empty());
         }
         PilotoEntity pilotoEntity = new PilotoEntity();
-        pilotoEntity.setNombre(piloto.getNombre());
-        pilotoEntity.setApellido(piloto.getApellido());
+        pilotoEntity.setNombre(responseReniec.getNombres().split(" ")[0]);
+        pilotoEntity.setApellido(responseReniec.getApellidoPaterno());
+        pilotoEntity.setDni(dni);
         pilotoEntity.setEstado(true);
         pilotoRepository.save(pilotoEntity);
         

@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface PilotoService {
     // metodo para guardar un piloto
-    ResponseBase<PilotoEntity> pilotoSave(PilotoRequest piloto);
+    ResponseBase<PilotoEntity> pilotoSave(String dni);
     ResponseBase<PilotoEntity> findById(int id);
     ResponseBase<List<PilotoEntity>> findByNombre(String nombre);
     ResponseBase<PilotoRequest> updatePiloto(PilotoRequest piloto, int id);

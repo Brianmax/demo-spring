@@ -15,6 +15,7 @@ public class PilotoEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_piloto")
     private int id;
+    private String dni;
     private String nombre;
     private String apellido;
     private boolean estado;
