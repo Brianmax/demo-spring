@@ -46,9 +46,9 @@ public class VueloServiceImpl implements VueloService {
         
         VueloEntity vueloEntity = vueloEntityOptional.get();
         
-        vueloRepository.save(vueloEntity);
+        VueloEntity vueloEntitySaved = vueloRepository.save(vueloEntity);
         
-        VueloResponse vueloResponse = Conversions.entityToVueloResponse(vueloEntity);
+        VueloResponse vueloResponse = Conversions.entityToVueloResponse(vueloEntitySaved);
         return new ResponseBase<>(Constants.CODE_CREATED,
                 Constants.MESSAGE_SUCCESFULL,
                 Optional.of(vueloResponse));
