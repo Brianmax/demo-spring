@@ -22,13 +22,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@AllArgsConstructor
 @Service
 public class VueloServiceImpl implements VueloService {
-    private VueloRepository vueloRepository;
-    private AvionRepository avionRepository;
-    private PilotoRepository pilotoRepository;
-    private RedisService redisService;
+    private final VueloRepository vueloRepository;
+    private final AvionRepository avionRepository;
+    private final PilotoRepository pilotoRepository;
+    private final RedisService redisService;
+
+    public VueloServiceImpl(VueloRepository vueloRepository, AvionRepository avionRepository, PilotoRepository pilotoRepository, RedisService redisService) {
+        this.vueloRepository = vueloRepository;
+        this.avionRepository = avionRepository;
+        this.pilotoRepository = pilotoRepository;
+        this.redisService = redisService;
+    }
 
     @Override
     public ResponseBase<VueloResponse> create(VueloRequest vueloRequest) {

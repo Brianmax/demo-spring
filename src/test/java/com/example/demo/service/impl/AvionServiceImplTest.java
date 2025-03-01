@@ -1,5 +1,6 @@
 package com.example.demo.service.impl;
 
+import com.example.demo.Util.Constants;
 import com.example.demo.entity.AerolineaEntity;
 import com.example.demo.entity.AvionEntity;
 import com.example.demo.repository.AerolineaRepository;
@@ -66,6 +67,24 @@ class AvionServiceImplTest {
         assertTrue(response.getData().isPresent());
         assertEquals(1, response.getData().get().getId());
         assertNotNull(response.getData().get().getAerolineaEntity());
+    }
+
+    @Test
+    void createFail() {
+        AvionEntity avionEntity = new AvionEntity();
+        avionEntity.setModelo("BW3-89");
+        avionEntity.setPeso(5);
+        avionEntity.setCapacidad(35);
+        AerolineaEntity aerolineaEntity = new AerolineaEntity();
+        aerolineaEntity.setId(40);
+        avionEntity.setAerolineaEntity(aerolineaEntity);
+
+        Mockito.when(aerolineaRepository.findById(Mockito.anyInt())).thenReturn(Optional.empty());
+
+        ResponseBase<AvionEntity> responseBase = avionService.create(avionEntity);
+
+        assertEquals(400, responseBase.getCodigo());
+        assertTrue(responseBase.getData().isEmpty());
     }
 
     @Test
