@@ -63,6 +63,8 @@ public class BoletoServiceImpl implements BoletoService {
         boletosEntity.setVueloEntity(vueloEntity);
         
         boletoRepository.save(boletosEntity);
+
+        String nombre = String.valueOf(vueloEntityOptional.get().getAvionEntity().getAerolineaEntity().getNombre());
         
         BoletoResponse boletoResponse = new BoletoResponse(
                 boletosEntity.getAsiento(),
@@ -73,7 +75,7 @@ public class BoletoServiceImpl implements BoletoService {
                 boletosEntity.getVueloEntity().getOrigen(),
                 boletosEntity.getVueloEntity().getDestino(),
                 boletosEntity.getVueloEntity().getAvionEntity().getModelo(),
-                boletosEntity.getVueloEntity().getAvionEntity().getAerolineaEntity().getNombre()
+                nombre
         );
         return new ResponseBase<>(
                 Constants.CODE_CREATED,
